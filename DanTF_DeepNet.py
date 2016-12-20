@@ -9,6 +9,7 @@ class LayerType(Enum):
 	reshape = 3
 	fully_connected = 4
 	dropout = 5
+	resize = 6
 
 class NetLayer():
 	def __init__(self,layer_type,shape=[],strides=[],k_size=[],dropout = 0.5):
@@ -116,14 +117,19 @@ class DanTFDeepNet():
 			dropout_dict[layer_index] = tf.constant(layer.dropout)
 			y_list.append( tf.nn.dropout(y_list[-1], dropout_dict[layer_index]) )
 
+		elif  layer.layer_type is LayerType.resize:
+			print("Resize Layer")
+			print("")
+
+			y_list.append( tf.image.resize_images(y_list[-1], layer.shape) )
 		
 		else:
 			print("Unhandled Layer Type")
 
 
 	def CreateTFVariables(self,layers):
-		X = tf.placeholder(tf.float32, [None, 784])
-		Y_ = tf.placeholder(tf.float32, [None, 10])
+		X = tf.placeholder(tf.float32, [None, layers[0].shape[1]*layers[0].shape[2]])
+		Y_ = tf.placeholder(tf.float32, [None, layers[-1].shape[-1]])
 
 		W_dict = {}
 		B_dict = {}
@@ -218,6 +224,11 @@ class DanTFDeepNet():
 			dropout_dict[layer_index] = tf.constant(1.0)
 			y_list.append( tf.nn.dropout(y_list[-1], dropout_dict[layer_index]) )
 
+		elif  layer.layer_type is LayerType.resize:
+			print("Resize Layer")
+			print("")
+
+			y_list.append( tf.image.resize_images(y_list[-1], layer.shape) )
 		
 		else:
 			print("Unhandled Layer Type")
