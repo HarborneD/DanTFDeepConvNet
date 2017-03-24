@@ -28,6 +28,7 @@ class TFReadyData():
 
 	def NextTrainBatch(self,batch_size):
 		#should return x and y data for next batch of training data
+		# (np.array( [[Xi]] ),np.array([[Yi]]) )
 		pass
 
 	def NextTestBatch(self):

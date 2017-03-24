@@ -27,23 +27,25 @@ layers.append( NetLayer(layer_type=LayerType.fully_connected, shape=[1024,10]) )
 mnist = input_data.read_data_sets("/mnist/", one_hot=True)
 mnist_data = MnistData(mnist)
 
-tf_net = DanTFDeepNet(layers, mnist_data)
+print(mnist_data.NextTrainBatch(10))
+
+# tf_net = DanTFDeepNet(layers, mnist_data)
 
 
-tf_net.StartSession()
+# tf_net.StartSession()
 
 
-tf_net.Train(1,20000,50)
+# tf_net.Train(1,20000,50)
 
-print(tf_net.Test())
+# print(tf_net.Test())
 
-#tf_net.SaveSess("mnist-C-MP-C-MP-FCL-FCL")
+# #tf_net.SaveSess("mnist-C-MP-C-MP-FCL-FCL")
 
-# tf_net.LoadSess("mnist-C-MP-C-MP-FCL-FCL")
+# # tf_net.LoadSess("mnist-C-MP-C-MP-FCL-FCL")
 
-run_x, run_y = tf_net.data.NextTrainBatch(1)
+# run_x, run_y = tf_net.data.NextTrainBatch(1)
 
-print("Prediction:") 
-print(tf_net.sess.run(tf_net.Run(run_x))[0])
-print("Actual:")
-print(list(run_y[0]).index(1))
+# print("Prediction:") 
+# print(tf_net.sess.run(tf_net.Run(run_x))[0])
+# print("Actual:")
+# print(list(run_y[0]).index(1))
